@@ -19,3 +19,5 @@ Desktop.ini
 # Go
 go.work
 go.work.sum
+
+.env
