@@ -1,9 +1,8 @@
 [tools]
 node = "lts"
 go = "latest"
-# wails = "go:github.com/wailsapp/wails/v2/cmd/wails"
 
 [tasks]
+setup = { run = "go install github.com/wailsapp/wails/v2/cmd/wails@latest", description = "Install Wails CLI" }
 dev = { run = "wails dev", description = "Run Wails in development mode" }
 build = { run = "wails build", description = "Build the Wails application" }
-init-project = { run = "wails init -n fm-mindmap -t vanilla", description = "Initialize Wails project (if not exists)" }
