@@ -1,0 +1,21 @@
+# Wails
+build/bin/
+wailsjs/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Mise
+.mise.local.toml
+
+# Go
+go.work
+go.work.sum
