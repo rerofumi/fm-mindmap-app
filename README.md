@@ -1,37 +1,102 @@
 # fm_mindmap_app
 
-fm_mindmap を Wails を使ってアプリケーション化するリポジトリ
+![Screenshot_app](docs/2025-11-28_162345.png)
 
-## 概要
+**fm_mindmap_app** は、AI搭載マインドマップツール [fm-mindmap](https://github.com/rerofumi/fm-mindmap) を [Wails](https://wails.io/) を使用してデスクトップアプリケーション化したプロジェクトです。
 
-frontend 下に git submodule として fm-mindmap (https://github.com/rerofumi/fm-mindmap)を展開し、Wails プロジェクトとしてビルドします。
-ビルド後は 1つの実行ファイルとしてアプリ化されますので、利用しやすくなります。
+ブラウザベースの `fm-mindmap` をネイティブアプリとしてパッケージングすることで、より快適な操作性と独立した実行環境を提供します。
 
-LLM 機能の利用には openrouter キーの設定が必要ですが、それは .env に記載して、exe と同じディレクトリに配置します。
 
-## 環境構築
+## 🧩 fm-mindmap とは
 
-ビルド環境の構築、ビルドランナーとして mise-en-place (https://mise.jdx.dev/) を使用します。
-開発ツールとして以下を衣装しますが、これらはすべて mise が準備します。
-- golang
-- wails
-- node.js
+AIとの対話を通じてアイデアを広げ、思考を整理するためのインテリジェント・マインドマッピングツールです。
 
-ビルドを進めるには mise のみインストールしてください。
-Windows 環境では `winget install jdx.mise` でインストールできます。
+- **チャットモード**: AIと相談しながら課題を抽出し、そこからマインドマップを生成できます。
+- **マップモード**: 従来のマインドマップ操作に加え、ノードごとのAI壁打ち、連想ワードの自動展開、タイトルの自動要約などが可能です。
+- **マルチモデル対応**: OpenRouter API を通じて、GPT-5, Claude 3.5 Sonnet, Gemini 1.5 Pro など最新のモデルを利用可能です。
 
-この git リポジトリの他に submodule を clone する必要があります
-submodule clone 置閏
+詳細は [fm-mindmap の README](https://github.com/rerofumi/fm-mindmap) を参照してください。
 
-## ビルド
+## 🛠️ 環境構築
 
-最初に `mise install` で必要なツールをインストールします。
+このプロジェクトでは、ビルド環境の構築およびタスクランナーとして [mise-en-place (mise)](https://mise.jdx.dev/) を使用します。
+Go, Node.js, Wails などのツールチェーンは `mise` によって管理されるため、個別にインストールする必要はありません。
 
-次に `mise run setup` で wails の準備をします。
+### 1. mise のインストール
 
-`mise run dev` で開発環境の実行、`mise run build` でアプリのビルドです。
+まだ `mise` をインストールしていない場合は、以下の手順でインストールしてください。
 
-## 設定ファイル(.env)
+**Windows (winget):**
+```powershell
+winget install jdx.mise
+```
 
-アプリでは LLM 機能を利用しますが、そのために openrouter のAPIキーと利用クレジットが必要です。
-dev 実行時はこのリポジトリ直下に .env ファイルを作成してください。ビルドアプリを実行するときは、その実行ファイルと同じディレクトリに .env ファイルを置いて下さい。
+その他のOSについては [mise の公式ドキュメント](https://mise.jdx.dev/getting-started.html) を参照してください。
+
+### 2. リポジトリのクローン
+
+このリポジトリは `frontend` ディレクトリをサブモジュールとして持っています。`--recursive` オプションを付けてクローンするか、クローン後にサブモジュールを初期化してください。
+
+```bash
+git clone --recursive https://github.com/rerofumi/fm_mindmap_app.git
+cd fm_mindmap_app
+```
+
+すでにクローン済みの場合は、以下を実行してサブモジュールを更新します。
+
+```bash
+git submodule update --init --recursive
+```
+
+### 3. ツールのセットアップ
+
+プロジェクトルートで以下のコマンドを実行し、必要なツール (Go, Node.js) をインストールします。
+
+```bash
+mise install
+```
+
+続いて、Wails の CLI ツールを準備するためのセットアップコマンドを実行します。
+
+```bash
+mise run setup
+```
+
+## ⚙️ 設定 (.env)
+
+アプリで AI 機能 (OpenRouter) を利用するには、API キーの設定が必要です。
+プロジェクトルートに `.env` ファイルを作成し、以下の内容を記述してください。
+
+```env
+VITE_OPENROUTER_API_KEY="sk-or-v1-..."
+# 必要に応じてデフォルトモデルを指定 (任意)
+# VITE_OPENROUTER_MODEL="openai/gpt-4o-mini"
+```
+
+*   **開発時 (`mise run dev`)**: プロジェクトルートの `.env` が読み込まれます。
+*   **ビルド後**: 生成された実行ファイル (`.exe`) と同じディレクトリに `.env` ファイルを配置してください。
+
+## 🚀 開発とビルド
+
+`mise` コマンドを使用して開発サーバーの起動やビルドを行います。
+
+| コマンド | 説明 |
+| :--- | :--- |
+| `mise run dev` | 開発モードで起動します。フロントエンドとバックエンドのホットリロードが有効になります。 |
+| `mise run build` | プロダクションビルドを実行します。`build/bin` ディレクトリに実行ファイルが生成されます。 |
+
+ビルドされたアプリケーションは `build/bin/fm-mindmap.exe` (Windowsの場合) として出力されます。
+
+## 📂 ディレクトリ構成
+
+- `frontend/`: `fm-mindmap` のソースコード (Git Submodule)。
+- `build/`: ビルド成果物やアセットが含まれます。
+- `app.go`, `main.go`: Wails アプリケーションのバックエンドロジック。
+- `wails.json`: Wails のプロジェクト設定。
+- `mise.toml`: 開発ツールのバージョン定義とタスク定義。
+
+## 📄 ライセンス
+
+[MIT License](./frontend/LICENSE)
+
+Copyright (c) 2025 rerofumi
