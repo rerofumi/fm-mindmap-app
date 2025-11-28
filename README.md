@@ -1,19 +1,37 @@
-# README
+# fm_mindmap_app
 
-## About
+fm_mindmap を Wails を使ってアプリケーション化するリポジトリ
 
-This is the official Wails Vanilla template.
+## 概要
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
+frontend 下に git submodule として fm-mindmap (https://github.com/rerofumi/fm-mindmap)を展開し、Wails プロジェクトとしてビルドします。
+ビルド後は 1つの実行ファイルとしてアプリ化されますので、利用しやすくなります。
 
-## Live Development
+LLM 機能の利用には openrouter キーの設定が必要ですが、それは .env に記載して、exe と同じディレクトリに配置します。
 
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
+## 環境構築
 
-## Building
+ビルド環境の構築、ビルドランナーとして mise-en-place (https://mise.jdx.dev/) を使用します。
+開発ツールとして以下を衣装しますが、これらはすべて mise が準備します。
+- golang
+- wails
+- node.js
 
-To build a redistributable, production mode package, use `wails build`.
+ビルドを進めるには mise のみインストールしてください。
+Windows 環境では `winget install jdx.mise` でインストールできます。
+
+この git リポジトリの他に submodule を clone する必要があります
+submodule clone 置閏
+
+## ビルド
+
+最初に `mise install` で必要なツールをインストールします。
+
+次に `mise run setup` で wails の準備をします。
+
+`mise run dev` で開発環境の実行、`mise run build` でアプリのビルドです。
+
+## 設定ファイル(.env)
+
+アプリでは LLM 機能を利用しますが、そのために openrouter のAPIキーと利用クレジットが必要です。
+dev 実行時はこのリポジトリ直下に .env ファイルを作成してください。ビルドアプリを実行するときは、その実行ファイルと同じディレクトリに .env ファイルを置いて下さい。
