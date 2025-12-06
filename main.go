@@ -33,8 +33,11 @@ func main() {
 	envVars := make(map[string]string)
 	for _, e := range os.Environ() {
 		pair := strings.SplitN(e, "=", 2)
-		if len(pair) == 2 && strings.HasPrefix(pair[0], "VITE_") {
-			envVars[pair[0]] = pair[1]
+		if len(pair) == 2 {
+			// Pass both VITE_ prefixed and LLM_ prefixed variables
+			if strings.HasPrefix(pair[0], "VITE_") || strings.HasPrefix(pair[0], "LLM_") {
+				envVars[pair[0]] = pair[1]
+			}
 		}
 	}
 
@@ -92,6 +95,7 @@ func main() {
 		AssetServer: assetServerOptions,
 		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
 		OnStartup:        app.startup,
+		OnDomReady:       app.domReady,
 		Bind: []interface{}{
 			app,
 		},
