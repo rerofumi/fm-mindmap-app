@@ -1,8 +1,8 @@
-# fm_mindmap_app
+# fm-mindmap-app
 
 ![Screenshot_app](docs/2025-11-28_162345.png)
 
-**fm_mindmap_app** は、AI搭載マインドマップツール [fm-mindmap](https://github.com/rerofumi/fm-mindmap) を [Wails](https://wails.io/) を使用してデスクトップアプリケーション化したプロジェクトです。
+**fm-mindmap-app** は、AI搭載マインドマップツール [fm-mindmap](https://github.com/rerofumi/fm-mindmap) を [Wails](https://wails.io/) を使用してデスクトップアプリケーション化したプロジェクトです。
 
 ブラウザベースの `fm-mindmap` をネイティブアプリとしてパッケージングすることで、より快適な操作性と独立した実行環境を提供します。
 
@@ -38,8 +38,8 @@ winget install jdx.mise
 このリポジトリは `frontend` ディレクトリをサブモジュールとして持っています。`--recursive` オプションを付けてクローンするか、クローン後にサブモジュールを初期化してください。
 
 ```bash
-git clone --recursive https://github.com/rerofumi/fm_mindmap_app.git
-cd fm_mindmap_app
+git clone --recursive https://github.com/rerofumi/fm-mindmap-app.git
+cd fm-mindmap-app
 ```
 
 すでにクローン済みの場合は、以下を実行してサブモジュールを更新します。
